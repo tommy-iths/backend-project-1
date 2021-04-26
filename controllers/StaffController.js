@@ -7,11 +7,11 @@ module.exports = {
   staffMembers(req, res, next) {
     credentials.forEach(async credential => {
       try {
-        let { email, password } = credential
-        if (!email || !password) {
-          throw new InvalidBodyStaff(['email', 'password'])
+        let { email, password, reqTokens } = credential
+        if (!email || !password || !reqTokens) {
+          throw new InvalidBodyStaff(['email', 'password', 'reqTokens'])
         }
-        await Staff.create({ email, password, })
+        await Staff.create({ email, password, reqTokens })
         res.end()
       } catch (error) {
         next(error)

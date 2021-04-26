@@ -21,6 +21,10 @@ const Staff = db.define('StaffMembers', {
   password: {
     type: DataTypes.STRING,
     allowNull: false,
+  },
+  reqTokens: {
+    type: DataTypes.STRING,
+    allowNull: false,
   }
 })
 
@@ -34,7 +38,7 @@ Staff.authenticate = async (email, password) => {
 
   const passwordMatch = bcrypt.compareSync(password, staff.password)
   if (passwordMatch) {
-    const payload = { id: staff.id, name: staff.name, email: staff.email }
+    const payload = { id: staff.id, email: staff.email }
     return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1w' })
   } else {
     throw new InvalidCredentials()
