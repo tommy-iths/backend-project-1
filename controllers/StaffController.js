@@ -1,18 +1,18 @@
 const { InvalidBodyStaff } = require("../errors")
 const Staff = require('../models/Staff')
 const credentials = require('../database/credentials')
+const { json } = require("express")
 
 
 module.exports = {
   staffMembers(req, res, next) {
     credentials.forEach(async credential => {
       try {
-        let { email, password, reqTokens } = credential
-        if (!email || !password || !reqTokens) {
-          throw new InvalidBodyStaff(['email', 'password', 'reqTokens'])
+        let { email, password } = credential
+        if (!email || !password) {
+          throw new InvalidBodyStaff(['email', 'password'])
         }
-        await Staff.create({ email, password, reqTokens })
-        res.end()
+        await Staff.create({ email, password })
       } catch (error) {
         next(error)
       }
@@ -30,5 +30,5 @@ module.exports = {
   me(req, res, next) {
     const staff = req.staff
     res.json({ staff })
-  }
+  },
 }

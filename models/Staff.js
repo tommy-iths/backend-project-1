@@ -22,10 +22,6 @@ const Staff = db.define('StaffMembers', {
     type: DataTypes.STRING,
     allowNull: false,
   },
-  reqTokens: {
-    type: DataTypes.STRING,
-    allowNull: false,
-  }
 })
 
 Staff.beforeCreate((Staff, options) => {
