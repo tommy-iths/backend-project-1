@@ -2,6 +2,7 @@ const { InvalidBodyStaff } = require("../errors")
 const Staff = require('../models/Staff')
 const credentials = require('../database/credentials')
 const { json } = require("express")
+const bcrypt = require('bcrypt')
 
 
 module.exports = {
@@ -43,13 +44,13 @@ module.exports = {
       const { newPassword } = req.body
       console.log(newPassword)
       if (!email || !newPassword) {
-        throw new InvalidBody()
+        throw new InvalidBodyStaff()
       } else {
         const newPassHash = bcrypt.hashSync(newPassword, 10)
-        const newPass = await User.findOne({ where: { email } })
+        const newPass = await Staff.findOne({ where: { email } })
         newPass.password = newPassHash
         await newPass.save()
-        res.send({ msn: "Password updated successfully!" })
+        res.send({ msg: "Password updated successfully!" })
       }
     } catch (error) { next(error) }
   }

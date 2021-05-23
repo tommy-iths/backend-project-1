@@ -3,6 +3,7 @@ require('dotenv').config()
 const app = express()
 const Routes = require('./routes/')
 const { errorHandler } = require('./middleware/errorHandler')
+const setup = require('./database/setup')
 
 app.use(express.json())
 
