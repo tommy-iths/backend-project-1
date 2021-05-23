@@ -22,6 +22,11 @@ const Staff = db.define('StaffMembers', {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  role: {
+    type: DataTypes.STRING,
+    enum: ['user', 'admin'],
+    defaultValue: 'user'
+  }
 })
 
 Staff.beforeCreate((Staff, options) => {
@@ -34,7 +39,7 @@ Staff.authenticate = async (email, password) => {
 
   const passwordMatch = bcrypt.compareSync(password, staff.password)
   if (passwordMatch) {
-    const payload = { id: staff.id, email: staff.email }
+    const payload = { id: staff.id, email: staff.email, role: staff.role }
     return jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1w' })
   } else {
     throw new InvalidCredentials()
@@ -54,5 +59,4 @@ Staff.validateToken = (token) => {
     }
   }
 }
-
 module.exports = Staff

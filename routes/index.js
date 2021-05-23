@@ -16,4 +16,8 @@ router.post('/auth', StaffController.login)
 
 router.get('/me', Auth.staff, StaffController.me)
 
+//router.patch('/me', Auth.staff, StaffController.changePassword)
+
+router.get('/staff', Auth.admin, StaffController.all)
+
 module.exports = router

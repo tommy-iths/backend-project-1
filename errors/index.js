@@ -34,6 +34,14 @@ class Unauthorized extends FuskeluringError {
   }
 }
 
+class Forbidden extends FuskeluringError {
+  constructor() {
+    super()
+    this.message = `Forbidden`
+    this.errorCode = 403
+  }
+}
+
 class TokenExpired extends FuskeluringError {
   constructor() {
     super()
@@ -48,5 +56,6 @@ module.exports = {
   InvalidBodyStaff,
   InvalidCredentials,
   Unauthorized,
-  TokenExpired
+  TokenExpired,
+  Forbidden
 }
